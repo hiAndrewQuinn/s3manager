@@ -38,7 +38,7 @@
             {{ else if .Buckets }}
             {{ range $bucket := .Buckets }}
             <div class="col l6 m12">
-                <a href="{{$.RootURL}}{{$instancePath}}/buckets/{{ $bucket.Name }}" style="color:black;">
+                <a href="{{$.RootURL}}{{$instancePath}}/buckets/{{ $bucket.Name }}" style="color:var(--text);">
                     <div class="card">
                         <div class="card-content">
                             <div class="row">
