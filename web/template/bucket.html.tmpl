@@ -30,7 +30,7 @@
     white-space: pre-wrap !important;
     tab-size: 2;
     padding: 8px !important;
-    border: 1px solid #ddd !important;
+    border: 1px solid var(--border) !important;
     border-radius: 4px !important;
     height: 480px !important;
     overflow-y: auto !important;
@@ -118,7 +118,7 @@
         </div>
         {{ if .Search }}
         <div class="col s12">
-            <p style="color: #666; margin-top: -10px;">
+            <p style="color: var(--muted); margin-top: -10px;">
                 <i class="material-icons tiny" style="vertical-align: middle;">info_outline</i>
                 Showing results for "<strong>{{ .Search }}</strong>"
                 {{ if eq .TotalItems 0 }}
@@ -252,7 +252,7 @@
                 </select>
                 <label>Items per page</label>
             </div>
-            <p style="margin-top: -10px; color: #666;">Showing {{ if gt .TotalItems 0 }}{{ add (mul (sub .Page 1) .PerPage) 1 }} - {{ min (mul .Page .PerPage) .TotalItems }}{{ else }}0{{ end }} of {{ .TotalItems }} items</p>
+            <p style="margin-top: -10px; color: var(--muted);">Showing {{ if gt .TotalItems 0 }}{{ add (mul (sub .Page 1) .PerPage) 1 }} - {{ min (mul .Page .PerPage) .TotalItems }}{{ else }}0{{ end }} of {{ .TotalItems }} items</p>
         </div>
         <div class="col s12 m6">
             <ul class="pagination right">
@@ -305,7 +305,7 @@
     </div>
 
     {{ else }}
-    <p style="text-align:center;margin-top:2em;color:gray;">
+    <p style="text-align:center;margin-top:2em;color:var(--muted);">
         {{ if .Search }}
         No objects matching "<strong>{{ .Search }}</strong>" found in <strong>{{ .BucketName }}/{{ .CurrentPath }}</strong>
         {{ else }}

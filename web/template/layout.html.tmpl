@@ -317,6 +317,108 @@
         :root[data-theme="dark"] .theme-toggle .theme-icon-sun {
             display: block;
         }
+
+        /* ----- Dark-mode overrides for issue #2 stress-test findings ----- */
+
+        /* Connection Error card: Materialize's .red.lighten-4 is a bright pink
+           pastel. Reskin to surface with a danger border so the error reads
+           against dark without flashbanging. */
+        :root[data-theme="dark"] .card.red.lighten-4 {
+            background-color: var(--surface) !important;
+            border: 1px solid var(--danger);
+        }
+        :root[data-theme="dark"] .card.red.lighten-4 .card-title.red-text,
+        :root[data-theme="dark"] .card.red.lighten-4 .red-text.text-darken-2 {
+            color: #ff8a85 !important;
+        }
+        :root[data-theme="dark"] .card.red.lighten-4 i.red-text {
+            color: #ff8a85 !important;
+        }
+
+        /* #public-access-status pill: JS sets .green/.red/.orange .lighten-5
+           on this element at runtime. Reskin those triplets in dark mode. */
+        :root[data-theme="dark"] #public-access-status.green.lighten-5,
+        :root[data-theme="dark"] #public-access-status.red.lighten-5,
+        :root[data-theme="dark"] #public-access-status.orange.lighten-5 {
+            background-color: var(--surface) !important;
+            border: 1px solid var(--border);
+        }
+        :root[data-theme="dark"] #public-access-status .green-text.text-darken-2 {
+            color: #5ec98d !important;
+        }
+        :root[data-theme="dark"] #public-access-status .red-text.text-darken-2 {
+            color: #ff8a85 !important;
+        }
+        :root[data-theme="dark"] #public-access-status .orange-text.text-darken-4 {
+            color: #f0b75a !important;
+        }
+        :root[data-theme="dark"] #public-access-status .blue-text {
+            color: var(--accent-active-text) !important;
+        }
+
+        /* Generic red-text on dark background is too saturated. Soften the
+           per-modal error spots (policy editor, generate URL). */
+        :root[data-theme="dark"] #policy-error,
+        :root[data-theme="dark"] #policy-error .red-text,
+        :root[data-theme="dark"] #gen-url-error.red-text,
+        :root[data-theme="dark"] #gen-url-error .red-text {
+            color: #ff8a85 !important;
+        }
+
+        /* Preloader spinner: Materialize hardcodes Material blue.
+           Override the four rotating border colors so the spinner reads
+           in our palette rather than as a stray bright-blue ring. */
+        :root[data-theme="dark"] .spinner-blue-only,
+        :root[data-theme="dark"] .spinner-blue,
+        :root[data-theme="dark"] .spinner-layer.spinner-blue-only,
+        :root[data-theme="dark"] .spinner-layer.spinner-blue {
+            border-color: var(--accent-active-text);
+        }
+
+        /* Progress bar (upload notification): swap the bright blue track
+           and indeterminate fill for theme tokens. */
+        :root[data-theme="dark"] .progress {
+            background-color: var(--hover-bg);
+        }
+        :root[data-theme="dark"] .progress .indeterminate,
+        :root[data-theme="dark"] .progress .determinate {
+            background-color: var(--accent);
+        }
+
+        /* .select-wrapper closed-state caret + readonly input bg should pick
+           up the dark surface. The dropdown itself already inherits from
+           our generic .dropdown-content override above. */
+        :root[data-theme="dark"] .select-wrapper input.select-dropdown {
+            color: var(--text);
+            border-bottom-color: var(--border);
+        }
+        :root[data-theme="dark"] .select-wrapper .caret {
+            fill: var(--text);
+            color: var(--text);
+        }
+
+        /* Print: always render light, regardless of dark toggle state. */
+        @media print {
+            :root[data-theme="dark"] {
+                --bg: #ffffff;
+                --surface: #ffffff;
+                --text: #212121;
+                --muted: #757575;
+                --border: #e0e0e0;
+                --accent: #2196F3;
+                --accent-hover: #1976D2;
+                --accent-soft: #e3f2fd;
+                --accent-active-text: #1976d2;
+                --hover-bg: #f5f5f5;
+            }
+            :root[data-theme="dark"] .card.red.lighten-4,
+            :root[data-theme="dark"] #public-access-status.green.lighten-5,
+            :root[data-theme="dark"] #public-access-status.red.lighten-5,
+            :root[data-theme="dark"] #public-access-status.orange.lighten-5 {
+                background-color: inherit !important;
+                border: none;
+            }
+        }
     </style>
 </head>
 

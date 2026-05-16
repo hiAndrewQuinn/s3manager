@@ -49,7 +49,7 @@
                                     <span class="card-title">
                                         {{ $bucket.Name }}
                                     </span>
-                                    <p style="color:gray;">Created on {{ $bucket.CreationDate }}</p>
+                                    <p style="color:var(--muted);">Created on {{ $bucket.CreationDate }}</p>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
             </div>
             {{ end }}
             {{ else }}
-            <p style="text-align:center;margin-top:2em;color:gray;">No buckets yet</p>
+            <p style="text-align:center;margin-top:2em;color:var(--muted);">No buckets yet</p>
             {{ end }}
 
         </div>
