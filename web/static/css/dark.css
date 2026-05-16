@@ -1,0 +1,413 @@
+/*
+ * Dark-mode theme and Materialize overrides for s3manager.
+ *
+ * Light/dark tokens live in :root and :root[data-theme="dark"].
+ * Materialize's defaults are scoped under [data-theme="dark"] so the light
+ * theme renders unmodified. The dark theme is opt-in via either the system
+ * prefers-color-scheme or the manual toggle (web/static/js/theme.js); a small
+ * inline <head> script in layout.html.tmpl applies the data-theme attribute
+ * before any stylesheet renders so there is no flash of incorrect theme.
+ *
+ * Color-name comments are the nearest match from the xkcd color survey
+ * (https://xkcd.com/color/rgb.txt, CC0) by perceptual (CIE Lab) distance.
+ * They're an aid to mental modeling, not authoritative names.
+ */
+
+:root {
+    --bg:                 #fafafa;  /* pale grey */
+    --surface:            #ffffff;  /* white */
+    --text:               #212121;  /* almost black */
+    --muted:              #757575;  /* medium grey */
+    --border:             #e0e0e0;  /* light grey */
+    --accent:             #2196F3;  /* azure */
+    --accent-hover:       #1976D2;  /* medium blue */
+    --accent-soft:        #e3f2fd;  /* pale grey (faintly blue-tinted) */
+    --accent-active-text: #1976d2;  /* medium blue */
+    --hover-bg:           #f5f5f5;  /* pale grey */
+}
+:root[data-theme="dark"] {
+    --bg:                 #000000;  /* black */
+    --surface:            #0a0c12;  /* almost black */
+    --text:               #d4d6e0;  /* silver */
+    --muted:              #7f8493;  /* steel */
+    --border:             #1d202c;  /* near-black slate (xkcd: "dark") */
+    --accent:             #3a3d8c;  /* blueberry */
+    --accent-hover:       #2a2d6e;  /* darkish blue */
+    --accent-soft:        #1a1c3a;  /* navy */
+    --accent-active-text: #a8aaff;  /* periwinkle blue */
+    --hover-bg:           #14171f;  /* near-black slate (xkcd: "dark") */
+    --teal:               #155a55;  /* dark turquoise */
+    --teal-hover:         #0d4540;  /* dark teal */
+    --danger:             #8c3a3d;  /* light maroon */
+    --danger-hover:       #6b2c2f;  /* purple brown */
+    /* Softened status colors used by error/warning/success text on dark.
+       Bright Materialize defaults (red #f44336, green #4caf50, orange #ff9800)
+       flashbang against #000; these tone them down without losing meaning. */
+    --danger-soft:        #ff8a85;  /* salmon pink */
+    --success-soft:       #5ec98d;  /* greenish teal */
+    --warning-soft:       #f0b75a;  /* butterscotch */
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+}
+nav {
+    background-color: var(--accent);
+}
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .card-panel,
+:root[data-theme="dark"] .collection {
+    background-color: var(--surface);
+    color: var(--text);
+}
+:root[data-theme="dark"] .collection {
+    border-color: var(--border);
+}
+:root[data-theme="dark"] .collection .collection-item {
+    background-color: var(--surface);
+    color: var(--text);
+    border-bottom-color: var(--border);
+}
+:root[data-theme="dark"] .modal {
+    background-color: var(--surface);
+    color: var(--text);
+}
+:root[data-theme="dark"] .modal .modal-footer {
+    background-color: var(--surface);
+    border-top: 1px solid var(--border);
+}
+:root[data-theme="dark"] input:not([type]),
+:root[data-theme="dark"] input[type="text"],
+:root[data-theme="dark"] input[type="password"],
+:root[data-theme="dark"] input[type="email"],
+:root[data-theme="dark"] input[type="search"],
+:root[data-theme="dark"] textarea.materialize-textarea {
+    color: var(--text);
+    border-bottom-color: var(--border);
+}
+:root[data-theme="dark"] .dropdown-content {
+    background-color: var(--surface);
+}
+:root[data-theme="dark"] .dropdown-content li > a,
+:root[data-theme="dark"] .dropdown-content li > span {
+    color: var(--text);
+}
+:root[data-theme="dark"] .dropdown-content li:hover,
+:root[data-theme="dark"] .dropdown-content li.active {
+    background-color: var(--hover-bg);
+}
+
+/* Tables (overrides Materialize's bright striped rule) */
+:root[data-theme="dark"] table {
+    color: var(--text);
+}
+/* Stripe sits at the midpoint between --bg (#000) and --hover-bg
+   (#14171f) so hover still produces a visible step on striped rows. */
+:root[data-theme="dark"] table.striped > tbody > tr:nth-child(odd) {
+    background-color: #0a0c10;
+}
+:root[data-theme="dark"] table.striped > tbody > tr,
+:root[data-theme="dark"] table.bordered > tbody > tr {
+    border-bottom-color: var(--border);
+}
+:root[data-theme="dark"] table.striped > thead > tr,
+:root[data-theme="dark"] table > thead > tr {
+    border-bottom-color: var(--border);
+    color: var(--text);
+}
+:root[data-theme="dark"] table.highlight > tbody > tr:hover,
+:root[data-theme="dark"] table.striped > tbody > tr:hover {
+    background-color: var(--hover-bg);
+}
+:root[data-theme="dark"] .sortable-header:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+/* Pagination */
+:root[data-theme="dark"] .pagination li.active {
+    background-color: var(--accent);
+}
+:root[data-theme="dark"] .pagination li.active a {
+    color: #ffffff;
+}
+:root[data-theme="dark"] .pagination li a {
+    color: var(--text);
+}
+:root[data-theme="dark"] .pagination li.disabled a {
+    color: var(--muted);
+}
+
+/* Buttons (Materialize defaults are bright teal/red) */
+:root[data-theme="dark"] .btn,
+:root[data-theme="dark"] .btn-large,
+:root[data-theme="dark"] .btn-small {
+    background-color: var(--teal);
+}
+:root[data-theme="dark"] .btn:hover,
+:root[data-theme="dark"] .btn-large:hover,
+:root[data-theme="dark"] .btn-small:hover,
+:root[data-theme="dark"] .btn:focus,
+:root[data-theme="dark"] .btn-large:focus {
+    background-color: var(--teal-hover);
+}
+:root[data-theme="dark"] .btn.disabled,
+:root[data-theme="dark"] .btn-large.disabled,
+:root[data-theme="dark"] .btn-small.disabled,
+:root[data-theme="dark"] .btn-floating.disabled,
+:root[data-theme="dark"] .btn:disabled,
+:root[data-theme="dark"] .btn-large:disabled {
+    background-color: var(--hover-bg) !important;
+    color: var(--muted) !important;
+    box-shadow: none !important;
+}
+:root[data-theme="dark"] .btn-flat {
+    color: var(--text);
+}
+:root[data-theme="dark"] .btn-flat:hover {
+    background-color: var(--hover-bg);
+}
+:root[data-theme="dark"] .btn-floating {
+    background-color: var(--danger);
+}
+:root[data-theme="dark"] .btn-floating:hover {
+    background-color: var(--danger-hover);
+}
+
+/* Override Materialize color helper classes (.teal, .red) which have
+   higher specificity than plain .btn */
+:root[data-theme="dark"] .btn.teal,
+:root[data-theme="dark"] .btn-large.teal,
+:root[data-theme="dark"] .btn-small.teal {
+    background-color: var(--teal) !important;
+}
+:root[data-theme="dark"] .btn.teal:hover,
+:root[data-theme="dark"] .btn-large.teal:hover {
+    background-color: var(--teal-hover) !important;
+}
+:root[data-theme="dark"] .btn.red,
+:root[data-theme="dark"] .btn-large.red,
+:root[data-theme="dark"] .btn-small.red,
+:root[data-theme="dark"] .btn-floating.red,
+:root[data-theme="dark"] .btn-floating.btn-large.red {
+    background-color: var(--danger) !important;
+}
+:root[data-theme="dark"] .btn.red:hover,
+:root[data-theme="dark"] .btn-large.red:hover,
+:root[data-theme="dark"] .btn-floating.red:hover {
+    background-color: var(--danger-hover) !important;
+}
+
+/* Breadcrumbs (in the navbar nav-wrapper) */
+:root[data-theme="dark"] .breadcrumb {
+    color: rgba(255,255,255,0.75);
+}
+:root[data-theme="dark"] .breadcrumb:before {
+    color: rgba(255,255,255,0.4);
+}
+
+/* Switches (used by Allow All Actions / Advanced Editor toggles) */
+:root[data-theme="dark"] .switch label .lever {
+    background-color: var(--hover-bg);
+}
+:root[data-theme="dark"] .switch label input[type=checkbox]:checked + .lever {
+    background-color: var(--accent-hover);
+}
+:root[data-theme="dark"] .switch label input[type=checkbox]:checked + .lever:after {
+    background-color: var(--accent);
+}
+
+/* Labels next to checkboxes/switches stay readable */
+:root[data-theme="dark"] form p label,
+:root[data-theme="dark"] .switch label {
+    color: var(--text);
+}
+
+.s3-instance-switcher {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+.s3-instance-button {
+    background-color: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+.s3-instance-button:hover {
+    background-color: var(--accent-hover);
+}
+.s3-instance-dropdown {
+    position: absolute;
+    bottom: 65px;
+    left: 0;
+    background: var(--surface);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    min-width: 200px;
+    display: none;
+}
+.s3-instance-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    display: block;
+    text-decoration: none;
+    color: var(--text);
+}
+.s3-instance-item:hover {
+    background-color: var(--hover-bg);
+}
+.s3-instance-item.active {
+    background-color: var(--accent-soft);
+    color: var(--accent-active-text);
+    font-weight: bold;
+}
+.s3-instance-item:last-child {
+    border-bottom: none;
+}
+
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 90px;
+    z-index: 1000;
+    background-color: var(--surface);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+.theme-toggle:hover {
+    background-color: var(--hover-bg);
+    color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+.theme-toggle .theme-icon {
+    display: block;
+}
+.theme-toggle .theme-icon-sun {
+    display: none;
+}
+:root[data-theme="dark"] .theme-toggle .theme-icon-moon {
+    display: none;
+}
+:root[data-theme="dark"] .theme-toggle .theme-icon-sun {
+    display: block;
+}
+
+/* Connection Error card: Materialize's .red.lighten-4 is a bright pink
+   pastel. Reskin to surface with a danger border so the error reads
+   against dark without flashbanging. */
+:root[data-theme="dark"] .card.red.lighten-4 {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--danger);
+}
+:root[data-theme="dark"] .card.red.lighten-4 .card-title.red-text,
+:root[data-theme="dark"] .card.red.lighten-4 .red-text.text-darken-2 {
+    color: var(--danger-soft) !important;
+}
+:root[data-theme="dark"] .card.red.lighten-4 i.red-text {
+    color: var(--danger-soft) !important;
+}
+
+/* #public-access-status pill: JS sets .green/.red/.orange .lighten-5 on
+   this element at runtime. Reskin those triplets in dark mode. */
+:root[data-theme="dark"] #public-access-status.green.lighten-5,
+:root[data-theme="dark"] #public-access-status.red.lighten-5,
+:root[data-theme="dark"] #public-access-status.orange.lighten-5 {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border);
+}
+:root[data-theme="dark"] #public-access-status .green-text.text-darken-2 {
+    color: var(--success-soft) !important;
+}
+:root[data-theme="dark"] #public-access-status .red-text.text-darken-2 {
+    color: var(--danger-soft) !important;
+}
+:root[data-theme="dark"] #public-access-status .orange-text.text-darken-4 {
+    color: var(--warning-soft) !important;
+}
+:root[data-theme="dark"] #public-access-status .blue-text {
+    color: var(--accent-active-text) !important;
+}
+
+/* Generic red-text on dark is too saturated. Soften the per-modal error
+   spots (policy editor, generate URL). */
+:root[data-theme="dark"] #policy-error,
+:root[data-theme="dark"] #policy-error .red-text,
+:root[data-theme="dark"] #gen-url-error.red-text,
+:root[data-theme="dark"] #gen-url-error .red-text {
+    color: var(--danger-soft) !important;
+}
+
+/* Preloader spinner: Materialize hardcodes Material blue. Override the
+   four rotating border colors so the spinner reads in our palette rather
+   than as a stray bright-blue ring. */
+:root[data-theme="dark"] .spinner-blue-only,
+:root[data-theme="dark"] .spinner-blue,
+:root[data-theme="dark"] .spinner-layer.spinner-blue-only,
+:root[data-theme="dark"] .spinner-layer.spinner-blue {
+    border-color: var(--accent-active-text);
+}
+
+/* Progress bar (upload notification): swap the bright blue track and
+   indeterminate fill for theme tokens. */
+:root[data-theme="dark"] .progress {
+    background-color: var(--hover-bg);
+}
+:root[data-theme="dark"] .progress .indeterminate,
+:root[data-theme="dark"] .progress .determinate {
+    background-color: var(--accent);
+}
+
+/* .select-wrapper closed-state caret + readonly input bg should pick up
+   the dark surface. The dropdown itself already inherits from our
+   generic .dropdown-content override above. */
+:root[data-theme="dark"] .select-wrapper input.select-dropdown {
+    color: var(--text);
+    border-bottom-color: var(--border);
+}
+:root[data-theme="dark"] .select-wrapper .caret {
+    fill: var(--text);
+    color: var(--text);
+}
+
+/* Print: always render light, regardless of dark toggle state. */
+@media print {
+    :root[data-theme="dark"] {
+        --bg:                 #ffffff;  /* white */
+        --surface:            #ffffff;  /* white */
+        --text:               #212121;  /* almost black */
+        --muted:              #757575;  /* medium grey */
+        --border:             #e0e0e0;  /* light grey */
+        --accent:             #2196F3;  /* azure */
+        --accent-hover:       #1976D2;  /* medium blue */
+        --accent-soft:        #e3f2fd;  /* pale grey (faintly blue-tinted) */
+        --accent-active-text: #1976d2;  /* medium blue */
+        --hover-bg:           #f5f5f5;  /* pale grey */
+    }
+    :root[data-theme="dark"] .card.red.lighten-4,
+    :root[data-theme="dark"] #public-access-status.green.lighten-5,
+    :root[data-theme="dark"] #public-access-status.red.lighten-5,
+    :root[data-theme="dark"] #public-access-status.orange.lighten-5 {
+        background-color: inherit !important;
+        border: none;
+    }
+}
