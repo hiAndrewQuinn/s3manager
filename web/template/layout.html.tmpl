@@ -3,6 +3,19 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var theme = saved || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+
     <title>S3 Manager</title>
 
     <meta charset="UTF-8">
@@ -12,6 +25,210 @@
     <link rel="stylesheet" href="{{$.RootURL}}/static/css/material-fonts.css" />
     <link rel="stylesheet" href="{{$.RootURL}}/static/css/materialize.min.css" />
     <style>
+        :root {
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --text: #212121;
+            --muted: #757575;
+            --border: #e0e0e0;
+            --accent: #2196F3;
+            --accent-hover: #1976D2;
+            --accent-soft: #e3f2fd;
+            --accent-active-text: #1976d2;
+            --hover-bg: #f5f5f5;
+        }
+        :root[data-theme="dark"] {
+            --bg: #000000;
+            --surface: #0a0c12;
+            --text: #d4d6e0;
+            --muted: #7f8493;
+            --border: #1d202c;
+            --accent: #3a3d8c;
+            --accent-hover: #2a2d6e;
+            --accent-soft: #1a1c3a;
+            --accent-active-text: #a8aaff;
+            --hover-bg: #14171f;
+            --teal: #155a55;
+            --teal-hover: #0d4540;
+            --danger: #8c3a3d;
+            --danger-hover: #6b2c2f;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+        nav {
+            background-color: var(--accent);
+        }
+        :root[data-theme="dark"] .card,
+        :root[data-theme="dark"] .card-panel,
+        :root[data-theme="dark"] .collection {
+            background-color: var(--surface);
+            color: var(--text);
+        }
+        :root[data-theme="dark"] .collection {
+            border-color: var(--border);
+        }
+        :root[data-theme="dark"] .collection .collection-item {
+            background-color: var(--surface);
+            color: var(--text);
+            border-bottom-color: var(--border);
+        }
+        :root[data-theme="dark"] .modal {
+            background-color: var(--surface);
+            color: var(--text);
+        }
+        :root[data-theme="dark"] .modal .modal-footer {
+            background-color: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+        :root[data-theme="dark"] input:not([type]),
+        :root[data-theme="dark"] input[type="text"],
+        :root[data-theme="dark"] input[type="password"],
+        :root[data-theme="dark"] input[type="email"],
+        :root[data-theme="dark"] input[type="search"],
+        :root[data-theme="dark"] textarea.materialize-textarea {
+            color: var(--text);
+            border-bottom-color: var(--border);
+        }
+        :root[data-theme="dark"] .dropdown-content {
+            background-color: var(--surface);
+        }
+        :root[data-theme="dark"] .dropdown-content li > a,
+        :root[data-theme="dark"] .dropdown-content li > span {
+            color: var(--text);
+        }
+        :root[data-theme="dark"] .dropdown-content li:hover,
+        :root[data-theme="dark"] .dropdown-content li.active {
+            background-color: var(--hover-bg);
+        }
+
+        /* Tables (overrides Materialize's bright striped rule) */
+        :root[data-theme="dark"] table {
+            color: var(--text);
+        }
+        /* Stripe sits at the midpoint between --bg (#000) and --hover-bg
+           (#14171f) so hover still produces a visible step on striped rows. */
+        :root[data-theme="dark"] table.striped > tbody > tr:nth-child(odd) {
+            background-color: #0a0c10;
+        }
+        :root[data-theme="dark"] table.striped > tbody > tr,
+        :root[data-theme="dark"] table.bordered > tbody > tr {
+            border-bottom-color: var(--border);
+        }
+        :root[data-theme="dark"] table.striped > thead > tr,
+        :root[data-theme="dark"] table > thead > tr {
+            border-bottom-color: var(--border);
+            color: var(--text);
+        }
+        :root[data-theme="dark"] table.highlight > tbody > tr:hover,
+        :root[data-theme="dark"] table.striped > tbody > tr:hover {
+            background-color: var(--hover-bg);
+        }
+        :root[data-theme="dark"] .sortable-header:hover {
+            background-color: var(--hover-bg) !important;
+        }
+
+        /* Pagination */
+        :root[data-theme="dark"] .pagination li.active {
+            background-color: var(--accent);
+        }
+        :root[data-theme="dark"] .pagination li.active a {
+            color: #ffffff;
+        }
+        :root[data-theme="dark"] .pagination li a {
+            color: var(--text);
+        }
+        :root[data-theme="dark"] .pagination li.disabled a {
+            color: var(--muted);
+        }
+
+        /* Buttons (Materialize defaults are bright teal/red) */
+        :root[data-theme="dark"] .btn,
+        :root[data-theme="dark"] .btn-large,
+        :root[data-theme="dark"] .btn-small {
+            background-color: var(--teal);
+        }
+        :root[data-theme="dark"] .btn:hover,
+        :root[data-theme="dark"] .btn-large:hover,
+        :root[data-theme="dark"] .btn-small:hover,
+        :root[data-theme="dark"] .btn:focus,
+        :root[data-theme="dark"] .btn-large:focus {
+            background-color: var(--teal-hover);
+        }
+        :root[data-theme="dark"] .btn.disabled,
+        :root[data-theme="dark"] .btn-large.disabled,
+        :root[data-theme="dark"] .btn-small.disabled,
+        :root[data-theme="dark"] .btn-floating.disabled,
+        :root[data-theme="dark"] .btn:disabled,
+        :root[data-theme="dark"] .btn-large:disabled {
+            background-color: var(--hover-bg) !important;
+            color: var(--muted) !important;
+            box-shadow: none !important;
+        }
+        :root[data-theme="dark"] .btn-flat {
+            color: var(--text);
+        }
+        :root[data-theme="dark"] .btn-flat:hover {
+            background-color: var(--hover-bg);
+        }
+        :root[data-theme="dark"] .btn-floating {
+            background-color: var(--danger);
+        }
+        :root[data-theme="dark"] .btn-floating:hover {
+            background-color: var(--danger-hover);
+        }
+
+        /* Override Materialize color helper classes (.teal, .red) which have
+           higher specificity than plain .btn */
+        :root[data-theme="dark"] .btn.teal,
+        :root[data-theme="dark"] .btn-large.teal,
+        :root[data-theme="dark"] .btn-small.teal {
+            background-color: var(--teal) !important;
+        }
+        :root[data-theme="dark"] .btn.teal:hover,
+        :root[data-theme="dark"] .btn-large.teal:hover {
+            background-color: var(--teal-hover) !important;
+        }
+        :root[data-theme="dark"] .btn.red,
+        :root[data-theme="dark"] .btn-large.red,
+        :root[data-theme="dark"] .btn-small.red,
+        :root[data-theme="dark"] .btn-floating.red,
+        :root[data-theme="dark"] .btn-floating.btn-large.red {
+            background-color: var(--danger) !important;
+        }
+        :root[data-theme="dark"] .btn.red:hover,
+        :root[data-theme="dark"] .btn-large.red:hover,
+        :root[data-theme="dark"] .btn-floating.red:hover {
+            background-color: var(--danger-hover) !important;
+        }
+
+        /* Breadcrumbs (in the navbar nav-wrapper) */
+        :root[data-theme="dark"] .breadcrumb {
+            color: rgba(255,255,255,0.75);
+        }
+        :root[data-theme="dark"] .breadcrumb:before {
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Switches (used by Allow All Actions / Advanced Editor toggles) */
+        :root[data-theme="dark"] .switch label .lever {
+            background-color: var(--hover-bg);
+        }
+        :root[data-theme="dark"] .switch label input[type=checkbox]:checked + .lever {
+            background-color: var(--accent-hover);
+        }
+        :root[data-theme="dark"] .switch label input[type=checkbox]:checked + .lever:after {
+            background-color: var(--accent);
+        }
+
+        /* Labels next to checkboxes/switches stay readable */
+        :root[data-theme="dark"] form p label,
+        :root[data-theme="dark"] .switch label {
+            color: var(--text);
+        }
+
         .s3-instance-switcher {
             position: fixed;
             bottom: 20px;
@@ -19,8 +236,8 @@
             z-index: 1000;
         }
         .s3-instance-button {
-            background-color: #2196F3;
-            color: white;
+            background-color: var(--accent);
+            color: #ffffff;
             border: none;
             border-radius: 50%;
             width: 56px;
@@ -33,13 +250,13 @@
             font-size: 16px;
         }
         .s3-instance-button:hover {
-            background-color: #1976D2;
+            background-color: var(--accent-hover);
         }
         .s3-instance-dropdown {
             position: absolute;
             bottom: 65px;
             left: 0;
-            background: white;
+            background: var(--surface);
             border-radius: 4px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             min-width: 200px;
@@ -48,21 +265,57 @@
         .s3-instance-item {
             padding: 12px 16px;
             cursor: pointer;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border);
             display: block;
             text-decoration: none;
-            color: #333;
+            color: var(--text);
         }
         .s3-instance-item:hover {
-            background-color: #f5f5f5;
+            background-color: var(--hover-bg);
         }
         .s3-instance-item.active {
-            background-color: #e3f2fd;
-            color: #1976d2;
+            background-color: var(--accent-soft);
+            color: var(--accent-active-text);
             font-weight: bold;
         }
         .s3-instance-item:last-child {
             border-bottom: none;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 90px;
+            z-index: 1000;
+            background-color: var(--surface);
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .theme-toggle:hover {
+            background-color: var(--hover-bg);
+            color: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+        .theme-toggle .theme-icon {
+            display: block;
+        }
+        .theme-toggle .theme-icon-sun {
+            display: none;
+        }
+        :root[data-theme="dark"] .theme-toggle .theme-icon-moon {
+            display: none;
+        }
+        :root[data-theme="dark"] .theme-toggle .theme-icon-sun {
+            display: block;
         }
     </style>
 </head>
@@ -88,10 +341,22 @@
     </div>
     {{ end }}
 
+    <!-- Theme toggle -->
+    <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="theme-icon theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="theme-icon theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+    </button>
+
     <script
       src="{{$.RootURL}}/static/js/jquery-3.6.0.min.js"
     ></script>
     <script src="{{$.RootURL}}/static/js/materialize.min.js"></script>
+    <script src="{{$.RootURL}}/static/js/theme.js"></script>
     <script>
         $(document).ready(function(){
             $('.dropdown-trigger').dropdown();
